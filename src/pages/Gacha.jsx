@@ -54,13 +54,6 @@ export default function Gacha() {
         canDraw: false,
         remainingCount: 0,
       }));
-
-      if (response.data.data.isNew) {
-        setCollections((prev) => ({
-          ...prev,
-          totalCount: (prev?.totalCount || 0) + 1,
-        }));
-      }
     } catch (err) {
       setError(
         err.response?.data?.message || "뽑기에 실패했습니다. 다시 시도해주세요."
@@ -80,8 +73,12 @@ export default function Gacha() {
       alert("컬렉션에 추가되었습니다!");
       setIsModalOpen(false);
 
-      const collectionResponse = await client.get("/collections/stats");
-      setCollections(collectionResponse.data.data);
+      if (gachaResult.isNew) {
+        setCollections((prev) => ({
+          ...prev,
+          totalCount: (prev?.totalCount || 0) + 1,
+        }));
+      }
     } catch (err) {
       alert(err.response?.data?.message || "컬렉션 추가에 실패했습니다.");
     }
@@ -113,8 +110,10 @@ export default function Gacha() {
         borderColor='#05131D'
         width='245px'
         fontSize='24px'
-        isButton={!loading && gachaStatus?.canDraw}
+        isButton={!loading}
       />
+
+      {error && <ErrorText>{error}</ErrorText>}
 
       {gachaResult && (
         <VillageModal
@@ -161,4 +160,9 @@ const CollectionImage = styled.img`
 const GachaImage = styled.img`
   width: 300px;
   max-width: 90%;
+`;
+
+const ErrorText = styled.p`
+  font-size: 16px;
+  color: red;
 `;
