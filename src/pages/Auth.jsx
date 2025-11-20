@@ -21,7 +21,7 @@ export default function Auth() {
 
   const validateForm = () => {
     if (!isLoginMode) {
-      if (formData.id.trim().length < 3) {
+      if (formData.username.trim().length < 3) {
         setError("아이디는 최소 3자 이상이어야 합니다.");
         return false;
       }
@@ -37,7 +37,7 @@ export default function Auth() {
         return false;
       }
     } else {
-      if (!formData.id.trim() || !formData.password) {
+      if (!formData.username.trim() || !formData.password) {
         setError("아이디와 비밀번호를 입력해주세요.");
         return false;
       }
@@ -58,7 +58,7 @@ export default function Auth() {
     try {
       if (isLoginMode) {
         const response = await client.post("/auth/login", {
-          user: formData.id,
+          username: formData.username,
           password: formData.password,
         });
         const { token } = response.data.data;
@@ -68,7 +68,7 @@ export default function Auth() {
         await client.post("/auth/signup", formData);
         alert("회원가입이 완료되었습니다! 로그인해주세요.");
         setIsLoginMode(true);
-        setFormData({ id: "", password: "", email: "" });
+        setFormData({ username: "", password: "", email: "" });
       }
     } catch (err) {
       setError(err.response?.data?.message || "오류가 발생했습니다.");
@@ -83,10 +83,10 @@ export default function Auth() {
       />
       <Form>
         <Input
-          name="id"
+          name="username"
           type="text"
           placeholder="아이디"
-          value={formData.id}
+          value={formData.username}
           onChange={handleChange}
           required
         />
