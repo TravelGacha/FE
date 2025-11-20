@@ -137,8 +137,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100%;
-  background: linear-gradient(180deg, #C8469C 0%, #B03A8A 100%);
+  height: 100%;
+  background: linear-gradient(225deg, #AF7EE7 0%, #BD2469 100%);
   padding: 40px;
   gap: 20px;
 `;
