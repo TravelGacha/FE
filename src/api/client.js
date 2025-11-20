@@ -5,6 +5,9 @@ const USE_MOCK = process.env.REACT_APP_USE_MOCK === "true";
 
 const apiClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 // 토큰 설정
@@ -27,7 +30,7 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       console.warn("토큰이 만료되었거나 인증되지 않았습니다.");
-      // 로그아웃 처리
+      // 로그아웃 처리 필요
     }
     return Promise.reject(error);
   }
