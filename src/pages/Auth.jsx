@@ -7,7 +7,7 @@ import client from "../api/client";
 export default function Auth() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [formData, setFormData] = useState({
-    id: "",
+    username: "",
     password: "",
     email: "",
   });
@@ -19,14 +19,46 @@ export default function Auth() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const validateForm = () => {
+    if (!isLoginMode) {
+      if (formData.id.trim().length < 3) {
+        setError("아이디는 최소 3자 이상이어야 합니다.");
+        return false;
+      }
+
+      if (formData.password.length < 6) {
+        setError("비밀번호는 최소 6자 이상이어야 합니다.");
+        return false;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        setError("올바른 이메일 형식을 입력해주세요.");
+        return false;
+      }
+    } else {
+      if (!formData.id.trim() || !formData.password) {
+        setError("아이디와 비밀번호를 입력해주세요.");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
+    // 입력값 검증
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       if (isLoginMode) {
         const response = await client.post("/auth/login", {
-          id: formData.id,
+          user: formData.id,
           password: formData.password,
         });
         const { token } = response.data.data;
