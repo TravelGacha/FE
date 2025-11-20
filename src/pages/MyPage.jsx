@@ -1,7 +1,6 @@
-import Navigator from "../navigator/Navigator";
 import styled from 'styled-components';
-import myPageT from '../../img/MyPageT.svg'
-import MyCollection from "./MyCollection";
+import myPageT from '../assets/MyPageT.svg'
+import MyCollection from "../components/myPage/MyCollection";
 
 const collections = 5;
 const memorys = 3;
@@ -19,7 +18,6 @@ function MyPage() {
                 <MyCollection content="memory" data={memorys} />
             </MyCollections>
             <LogOut>로그아웃</LogOut>
-            <Navigator />
         </MpgBasic>
     );
 }

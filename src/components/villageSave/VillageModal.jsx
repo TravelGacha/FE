@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import location from '../../img/Location.svg'
-import modalXBtn from '../../img/ModalXBtn.svg'
+import location from '../../assets/Location.svg'
+import modalXBtn from '../../assets/ModalXBtn.svg'
 
 function VillageModal({ closeModal }) {
     return (
