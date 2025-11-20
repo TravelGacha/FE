@@ -1,9 +1,8 @@
-import Navigator from "../navigator/Navigator";
 import styled from 'styled-components';
-import vSBackground from '../../img/VSBackground.svg'
-import Villages from '../villageSave/Villages';
-import saveT from '../../img/SaveT.svg';
-import VillageModal from "./VillageModal";
+import vSBackground from '../assets/VSBackground.svg'
+import Village from '../components/Village';
+import saveT from '../assets/SaveT.svg';
+import VillageModal from "../components/villageSave/VillageModal";
 import { useState } from "react";
 
 function VillageSave() {
@@ -91,14 +90,13 @@ function VillageSave() {
             <section>
                 {villageList.map((village) => {
                     return (
-                        <Villages key={village.collectionId}{...village} onClick={() => clickVillage(village.collectionId)} />
+                        <Village key={village.collectionId}{...village} onClick={() => clickVillage(village.collectionId)} />
                     );
                 })}
                 {modalOpen && (
                     <VillageModal onClick={(e) => e.stopPropagation()} closeModal={closeModal} />
                 )}
             </section>
-            <Navigator />
         </VSaveBasic>
     );
 }

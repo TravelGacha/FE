@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import collectionImg from '../../img/CollectionImg.svg'
-import memoryImg from '../../img/MemoryImg.svg'
+import collectionImg from '../../assets/trophy.svg'
+import memoryImg from '../../assets/MemoryImg.svg'
 
 function MyCollection({ content, data }) {
     return (

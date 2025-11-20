@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import Navigator from '../navigator/Navigator';
-import mPlusBtn from '../../img/MPlusBtn.svg';
+import mPlusBtn from '../assets/MPlusBtn.svg';
 import { useState } from 'react';
-import MemoryAdd from './MemoryAdd';
+import MemoryAdd from '../components/myMemory/MemoryAdd';
 
 function MyMemory() {
 
@@ -23,7 +22,6 @@ function MyMemory() {
                 <MemoryAdd onClick={(e) => e.stopPropagation()} closeModal={closeModal} />
             )}
             <img src={mPlusBtn} alt='메모리 추가' onClick={clickPlusBtn} />
-            <Navigator />
         </MMemoryBasic>
     );
 }
