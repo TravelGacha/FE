@@ -178,7 +178,7 @@ const BannerCard = styled.div`
   max-width: 375px;
   height: 120px;
   flex-shrink: 0;
-  background: linear-gradient(135deg, #8B3A8F 0%, #B946BE 100%);
+  background: linear-gradient(225deg, #BD2469 0%, #8D1FA6 100%);
   border-radius: 10px;
   cursor: pointer;
   transition: transform 0.2s;
