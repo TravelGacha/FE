@@ -277,6 +277,7 @@ const PaginationContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+  z-index: 1;
 
   span {
     font-size: 16px;

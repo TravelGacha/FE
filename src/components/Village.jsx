@@ -1,11 +1,10 @@
-import React from "react";
 import styled from 'styled-components';
 import location from '../assets/Location.svg'
 
-function Village({ villageName, sidoName, onClick }) {
+function Village({ villageName, sidoName, imageUrl, onClick }) {
   return (
     <VillageDiv onClick={onClick}>
-      <img />
+      <ImgDiv src={imageUrl} alt={villageName} />
       <VillageInfo>
         <Title>{villageName}</Title>
         <Address>
@@ -16,6 +15,14 @@ function Village({ villageName, sidoName, onClick }) {
     </VillageDiv>
   );
 }
+const ImgDiv = styled.img`
+height:145.77px;
+width:375px;
+position: absolute;
+top:0;
+left:0;
+border-radius: 10px 10px 0 0;
+`
 
 const VillageDiv = styled.div`
   width: 100%;
