@@ -61,14 +61,23 @@ export default function Auth() {
           username: formData.username,
           password: formData.password,
         });
-        const { token } = response.data.data;
-        localStorage.setItem("jwt_token", token);
-        navigate("/app/village");
+
+        if (response.data.success) {
+          const { token } = response.data.data;
+          localStorage.setItem("jwt_token", token);
+          navigate("/app/village");
+        } else {
+          setError(response.data.message);
+        }
       } else {
-        await client.post("/auth/signup", formData);
-        alert("회원가입이 완료되었습니다! 로그인해주세요.");
-        setIsLoginMode(true);
-        setFormData({ username: "", password: "", email: "" });
+        const response = await client.post("/auth/signup", formData);
+        if (response.data.success) {
+          alert("회원가입이 완료되었습니다! 로그인해주세요.");
+          setIsLoginMode(true);
+          setFormData({ username: "", password: "", email: "" });
+        } else {
+          setError(response.data.message);
+        }
       }
     } catch (err) {
       setError(err.response?.data?.message || "오류가 발생했습니다.");

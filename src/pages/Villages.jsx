@@ -103,9 +103,6 @@ export default function Villages() {
         </BannerContent>
       </BannerCard>
 
-      {loading && <StatusText>로딩 중...</StatusText>}
-      {error && <ErrorText>{error}</ErrorText>}
-
       <FilterContainer>
         <Select name="region" value={filters.region} onChange={handleFilterChange}>
           <option value="">전체 지역</option>
@@ -117,7 +114,19 @@ export default function Villages() {
         </Select>
       </FilterContainer>
 
+      <PaginationContainer>
+        <PageButton onClick={() => handlePageChange(pageData.currentPage - 1)} disabled={pageData.currentPage === 0}>
+          이전
+        </PageButton>
+        <span>페이지 {pageData.currentPage + 1} / {pageData.totalPages}</span>
+        <PageButton onClick={() => handlePageChange(pageData.currentPage + 1)} disabled={pageData.currentPage + 1 >= pageData.totalPages}>
+          다음
+        </PageButton>
+      </PaginationContainer>
+
       <VillageList>
+        {loading && <StatusText>로딩 중...</StatusText>}
+        {error && <ErrorText>{error}</ErrorText>}
         {villages.map((village) => (
           <Village
             key={village.villageId}
@@ -126,16 +135,6 @@ export default function Villages() {
             onClick={() => openModal(village.villageId)}
           />
         ))}
-
-        <PaginationContainer>
-          <PageButton onClick={() => handlePageChange(pageData.currentPage - 1)} disabled={pageData.currentPage === 0}>
-            이전
-          </PageButton>
-          <span>페이지 {pageData.currentPage + 1} / {pageData.totalPages}</span>
-          <PageButton onClick={() => handlePageChange(pageData.currentPage + 1)} disabled={pageData.currentPage + 1 >= pageData.totalPages}>
-            다음
-          </PageButton>
-        </PaginationContainer>
       </VillageList>
 
       {selectedVillageDetails && (
@@ -171,6 +170,7 @@ const BackgroundMap = styled.img`
   object-fit:cover;
   z-index: 0;
   pointer-events: none;
+  opacity: 50%
 `;
 
 const BannerCard = styled.div`
@@ -247,31 +247,6 @@ const Select = styled.select`
   border: 2px solid #D4D4D4;
 `;
 
-const StatusText = styled.p`
-  font-size: 24px;
-  color: white;
-`;
-
-const ErrorText = styled.p`
-  font-size: 24px;
-  color: red;
-`;
-
-const VillageList = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-`;
-
 const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -298,4 +273,31 @@ const PageButton = styled.button`
     background-color: #D4D4D4;
     cursor: not-allowed;
   }
+`;
+
+const StatusText = styled.p`
+  font-size: 24px;
+  color: white;
+  z-index: 1;
+`;
+
+const ErrorText = styled.p`
+  font-size: 24px;
+  color: red;
+  z-index: 1;
+`;
+
+const VillageList = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;

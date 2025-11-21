@@ -140,6 +140,7 @@ const ButtonContainer = styled.div`
   width: ${props => props.$width || '212px'};
   cursor: ${props => props.$clickable ? 'pointer' : 'default'};
   transition: transform 0.1s ease;
+  filter: drop-shadow(3px 3px 0px ${props => props.$borderColor || '#1E3445'});
 
   ${props => props.$clickable && `
     &:hover {
@@ -221,7 +222,7 @@ const Content = styled.div`
   align-items: flex-start;
   min-height: 1px;
   min-width: 1px;
-  padding: 12px 0;
+  padding: 9px 0;
   position: relative;
   flex-shrink: 0;
 `;
@@ -249,6 +250,7 @@ const TextContent = styled.div`
 `;
 
 const ButtonText = styled.p`
+  white-space: pre-line;
   line-height: 1.3;
   position: relative;
   flex-shrink: 0;

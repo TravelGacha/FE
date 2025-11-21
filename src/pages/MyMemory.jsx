@@ -1,19 +1,15 @@
-import styled from 'styled-components';
-import mPlusBtn from '../assets/MPlusBtn.svg';
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
+import PixelButton from '../components/PixelButton';
 import MemoryCard from '../components/myMemory/MemoryCard';
-import myMemoryT from '../assets/MyMemoryT.svg';
+import mPlusBtn from '../assets/MPlusBtn.svg';
 import client from '../api/client';
-
-//swiper 라이브러리 설치했습니다. npm install swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-
 function MyMemory() {
-
     const [memoryList, setMemoryList] = useState([]);
 
     const navigate = useNavigate();
@@ -39,10 +35,6 @@ function MyMemory() {
         fetchMemories();
     }, []);
 
-
-    // 더미데이터
-
-
     //슬라이딩 코드
     const swiperConfig = {
         slidesPerView: 'auto',
@@ -51,12 +43,14 @@ function MyMemory() {
         pagination: {
             clickable: true,
         },
-
     };
 
     return (
         <MMemoryBasic>
-            <MemoryTImg src={myMemoryT} alt='메모리 제목' />
+            <PixelButton
+                text="나의 추억들"
+                isButton={false}
+            />
             <div>
                 <Swiper {...swiperConfig} >
 
@@ -74,22 +68,21 @@ function MyMemory() {
 }
 
 const MMemoryBasic = styled.div`
-  margin: auto;
   display: flex;
-  width: 393px;
-  height: 852px;
   flex-direction: column;
   align-items: center;
-  justify-content: center; 카드를 세로 중앙에 배치
+  height: 100%;
+  padding-top: 60px;
+  gap: 50px;
   position: relative;
   background-color: #BEFFAD;
   overflow: hidden;
 
   >img{
     position: absolute;
-    bottom: 106px;
+    bottom: 34px;
     right:20px;
-    }
+  }
 
   .swiper-container {
     width: 100%;
@@ -107,16 +100,5 @@ const MMemoryBasic = styled.div`
     justify-content: center;
   }
 `;
-
-const MemoryTImg = styled.img`
-  width: 212px;
-  height: 127px;
-  position: absolute;
-  top:23px;
-  left:91px;
-`;
-
-
-
 
 export default MyMemory;

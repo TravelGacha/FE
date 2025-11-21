@@ -18,10 +18,14 @@ export default function Gacha() {
     const fetchData = async () => {
       try {
         const gachaResponse = await client.get("/gacha/status");
-        setGachaStatus(gachaResponse.data.data);
+        if (gachaResponse.data.success) {
+          setGachaStatus(gachaResponse.data.data);
+        }
 
         const collectionResponse = await client.get("/collections/stats");
-        setCollections(collectionResponse.data.data);
+        if (collectionResponse.data.success) {
+          setCollections(collectionResponse.data.data);
+        }
       } catch (err) {
         setError(
           err.response?.data?.message || "데이터를 불러오는 데 실패했습니다."
@@ -46,14 +50,16 @@ export default function Gacha() {
 
     try {
       const response = await client.post("/gacha/draw", {});
-      setGachaResult(response.data.data);
-      setIsModalOpen(true);
+      if (response.data.success) {
+        setGachaResult(response.data.data);
+        setIsModalOpen(true);
 
-      setGachaStatus((prev) => ({
-        ...prev,
-        canDraw: false,
-        remainingCount: 0,
-      }));
+        setGachaStatus((prev) => ({
+          ...prev,
+          canDraw: false,
+          remainingCount: 0,
+        }));
+      }
     } catch (err) {
       setError(
         err.response?.data?.message || "뽑기에 실패했습니다. 다시 시도해주세요."
@@ -67,17 +73,19 @@ export default function Gacha() {
     if (!gachaResult) return;
 
     try {
-      await client.post("/collections", {
+      const response = await client.post("/collections", {
         villageId: gachaResult.villageId,
       });
-      alert("컬렉션에 추가되었습니다!");
-      setIsModalOpen(false);
+      if (response.data.success) {
+        alert("컬렉션에 추가되었습니다!");
+        setIsModalOpen(false);
 
-      if (gachaResult.isNew) {
-        setCollections((prev) => ({
-          ...prev,
-          totalCount: (prev?.totalCount || 0) + 1,
-        }));
+        if (gachaResult.isNew) {
+          setCollections((prev) => ({
+            ...prev,
+            totalCount: (prev?.totalCount || 0) + 1,
+          }));
+        }
       }
     } catch (err) {
       alert(err.response?.data?.message || "컬렉션 추가에 실패했습니다.");
@@ -91,7 +99,8 @@ export default function Gacha() {
   return (
     <Container>
       <PixelButton
-        text="마을 가챠!"
+        text={!gachaResult ? "마을 가챠!" : (loading ? "두근두근..." : `내일은 어떤\n여행지가 나올까?`)}
+        fontSize={gachaResult && !loading && "22px"}
         isButton={false}
       />
 
