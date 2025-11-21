@@ -3,12 +3,42 @@ import vSBackground from '../assets/VSBackground.svg'
 import Village from '../components/Village';
 import saveT from '../assets/SaveT.svg';
 import VillageModal from "../components/villageSave/VillageModal";
-import { useState } from "react";
+import MemoryAdd from '../components/villageSave/MemoryAdd';
+import { useState, useEffect } from "react";
+import client from '../api/client';
 
 function VillageSave() {
 
+    const [villageList, setVillageList] = useState([]);
+    const [pageData, setPageData] = useState({ totalPages: 0, currentPage: 0 });
+
+    useEffect(() => {
+        const fetchCollections = async () => {
+            try {
+                const res = await client.get('/collections', {
+                    params: {
+                        page: pageData.currentPage,
+                        size: 20,
+                    }
+                });
+
+                const { content, totalPages, currentPage } = res.data.data;
+
+                if (res.data.success) {
+                    setVillageList(content);
+                    setPageData({ totalPages, currentPage });
+                }
+            } catch (error) {
+                console.error("collection 불러오기 실패:", error);
+            }
+        };
+        fetchCollections();
+    }, [pageData.currentPage]);
+
+    //세부 정보 확인 모달
     const [modalOpen, setModalOpen] = useState(false);
     const [villageNum, setVillageNum] = useState();
+
 
     const clickVillage = (id) => {
         setModalOpen(true);
@@ -20,73 +50,42 @@ function VillageSave() {
         setModalOpen(false);
     }
 
-    const villagesList = [
 
-        {
+    //추억 저장 모달 코드
+    //모달 코드
+    const [MmodalOpen, setMModalOpen] = useState(false);
 
-            "collectionId": 1,
+    const clickWriteBtn = () => {
+        setMModalOpen(true);
+        setModalOpen(false);
+    }
 
-            "villageId": 123,
+    const closeMModal = () => {
+        setMModalOpen(false);
+    }
 
-            "villageName": "산청마을",
+    //페이지 이동
 
-            "sidoName": "경상남도",
+    const handlePageChange = (newPage) => {
+        if (newPage >= 0 && newPage < pageData.totalPages) {
+            setPageData(prev => ({ ...prev, currentPage: newPage }));
+        }
+    };
 
-            "sigunguName": "산청군",
-
-            "address": "경상남도 산청군 산청읍 산청리 123",
-
-            "collectedAt": "2025-01-15T10:30:00"
-
-        },
-
-        {
-
-            "collectionId": 2,
-
-            "villageId": 123,
-
-            "villageName": "두리마을",
-
-            "sidoName": "경상남도",
-
-            "sigunguName": "산청군",
-
-            "address": "경상남도 산청군 산청읍 산청리 123",
-
-            "collectedAt": "2025-01-15T10:30:00"
-
-        },
-
-        {
-
-            "collectionId": 3,
-
-            "villageId": 124,
-
-            "villageName": "하나마을",
-
-            "sidoName": "경상남도",
-
-            "sigunguName": "산청군",
-
-            "address": "경상남도 산청군 산청읍 산청리 123",
-
-            "collectedAt": "2025-01-15T10:30:00"
-
-        },
-
-
-
-    ]
-
-    const [villageList, setVillageList] = useState(villagesList);
-
-
+    const filteredData = villageList.filter((item) => item.collectionId === villageNum);
 
     return (
         <VSaveBasic>
             <SaveTImg src={saveT} alt="마을 저장소 제목" />
+            <PaginationContainer>
+                <PageButton onClick={() => handlePageChange(pageData.currentPage - 1)} disabled={pageData.currentPage === 0}>
+                    이전
+                </PageButton>
+                <span>페이지 {pageData.currentPage + 1} / {pageData.totalPages}</span>
+                <PageButton onClick={() => handlePageChange(pageData.currentPage + 1)} disabled={pageData.currentPage + 1 >= pageData.totalPages}>
+                    다음
+                </PageButton>
+            </PaginationContainer>
             <section>
                 {villageList.map((village) => {
                     return (
@@ -94,7 +93,10 @@ function VillageSave() {
                     );
                 })}
                 {modalOpen && (
-                    <VillageModal onClick={(e) => e.stopPropagation()} closeModal={closeModal} />
+                    <VillageModal onClick={(e) => e.stopPropagation()} closeModal={closeModal} clickWriteBtn={clickWriteBtn} key={filteredData[0].collectionId}{...filteredData[0]} />
+                )}
+                {MmodalOpen && (
+                    <MemoryAdd onClick={(e) => e.stopPropagation()} closeMModal={closeMModal} key={filteredData[0].collectionId}{...filteredData[0]} />
                 )}
             </section>
         </VSaveBasic>
@@ -111,8 +113,10 @@ align-items: center;
 position: relative;
 background: #FFADAE url(${vSBackground}) no-repeat center;
 section{
+margin-top: 10px;
 display:flex;
 flex-direction:column;
+width: 375px;
 gap:10px; 
 overflow-y: auto;
 padding-bottom: 90px;
@@ -129,6 +133,33 @@ const SaveTImg = styled.img`
   margin-top: 23px;
   width: 212px;
   height: 127px;
+`;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  span {
+    font-size: 16px;
+  }
+`;
+
+const PageButton = styled.button`
+  font-family: inherit;
+  font-size: 16px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: #8D1FA6;
+  color: white;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: #D4D4D4;
+    cursor: not-allowed;
+  }
 `;
 
 export default VillageSave;
