@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-const PrivateRoute = ({ element: Element, ...rest }) => {
+export default function PrivateRoute({ element: Element, ...rest }) {
   const token = localStorage.getItem("jwt_token");
 
   if (token) {
@@ -10,5 +10,3 @@ const PrivateRoute = ({ element: Element, ...rest }) => {
 
   return <Navigate to="/auth" replace />;
 };
-
-export default PrivateRoute;
