@@ -88,7 +88,7 @@ function MemoryAdd({ closeMModal, villageId, villageName, address, imageUrl }) {
 
 const CalendarDiv = styled.div`
 display: flex;
-justify-content: center;`
+`
 
 
 
