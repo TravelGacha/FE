@@ -56,13 +56,13 @@ function MemoryCard({ memoryId, villageName, sidoName, content, visitDate, image
                 <Content>{content}</Content>
                 <DeleteDiv>
                     <PixelButton
-                        text={"삭제하기"}
+                        text="삭제하기"
                         onClick={clickDelete}
-                        backgroundColor='#DD1A21'
-                        textColor='white'
-                        borderColor='#05131D'
-                        width='210px'
-                        fontSize='24px'
+                        backgroundColor="#DD1A21"
+                        textColor="white"
+                        borderColor="#05131D"
+                        width="100px"
+                        fontSize="16px"
                     />
                 </DeleteDiv>
             </CardInfo>
