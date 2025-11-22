@@ -101,8 +101,8 @@ export default function Gacha() {
   return (
     <Container>
       <PixelButton
-        text={!gachaStatus?.canDraw ? "마을 가챠!" : (loading ? "두근두근..." : `내일은 어떤\n여행지가 나올까?`)}
-        fontSize={!gachaStatus?.canDraw && !loading && "22px"}
+        text={gachaStatus?.canDraw ? "마을 가챠!" : (loading ? "두근두근..." : `내일은 어떤\n여행지가 나올까?`)}
+        fontSize={gachaStatus?.canDraw && !loading && "22px"}
         isButton={false}
       />
 
