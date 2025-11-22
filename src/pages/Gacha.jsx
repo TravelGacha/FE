@@ -96,6 +96,8 @@ export default function Gacha() {
     setIsModalOpen(false);
   };
 
+  if (!gachaStatus) return <Container>로딩 중...</Container>
+
   return (
     <Container>
       <PixelButton
@@ -106,7 +108,7 @@ export default function Gacha() {
 
       <CollectionText>
         <CollectionImage src={TrophyImg} alt="trophy" />
-        내 컬렉션 ({collections?.totalCount || 0}/100)
+        내 컬렉션 ({collections?.totalCount || 0}/1254)
       </CollectionText>
 
       <GachaImage src={GachaMachineImage} alt="Gacha Machine" />
