@@ -280,12 +280,13 @@ export const mockGetVillages = async (params = {}) => {
     sidoName: village.sidoName,
     sigunguName: village.sigunguName,
     address: village.address,
+    imageUrl: village.imageUrl,
     isCollected: currentUser
       ? collections.some(
-          (c) =>
-            c.userId === currentUser.userId &&
-            c.villageId === village.villageId
-        )
+        (c) =>
+          c.userId === currentUser.userId &&
+          c.villageId === village.villageId
+      )
       : false,
   }));
 
@@ -316,10 +317,10 @@ export const mockGetVillageById = async (villageId) => {
 
   const collection = currentUser
     ? collections.find(
-        (c) =>
-          c.userId === currentUser.userId &&
-          c.villageId === village.villageId
-      )
+      (c) =>
+        c.userId === currentUser.userId &&
+        c.villageId === village.villageId
+    )
     : null;
 
   return successResponse({
@@ -361,6 +362,7 @@ export const mockGetCollections = async (params = {}) => {
       sidoName: village?.sidoName,
       sigunguName: village?.sigunguName,
       address: village?.address,
+      imageUrl: village?.imageUrl,
       collectedAt: c.collectedAt,
     };
   });
@@ -545,7 +547,9 @@ export const mockGetMemories = async (params = {}) => {
       address: village?.address,
       content: m.content,
       visitDate: m.visitDate,
+      imageUrl: m.imageUrl || null,
       createdAt: m.createdAt,
+      updatedAt: m.updatedAt,
     };
   });
 
@@ -603,6 +607,7 @@ export const mockGetMemoryById = async (memoryId) => {
     address: village?.address,
     content: memory.content,
     visitDate: memory.visitDate,
+    imageUrl: memory.imageUrl || null,
     createdAt: memory.createdAt,
     updatedAt: memory.updatedAt,
   });
@@ -620,7 +625,13 @@ export const mockCreateMemory = async (data) => {
     };
   }
 
-  const village = villages.find((v) => v.villageId === data.villageId);
+  // Extract data from FormData (in mock, it comes as regular object)
+  const villageId = typeof data.get === 'function' ? parseInt(data.get('villageId')) : data.villageId;
+  const content = typeof data.get === 'function' ? data.get('content') : data.content;
+  const visitDate = typeof data.get === 'function' ? data.get('visitDate') : data.visitDate;
+  const imageFile = typeof data.get === 'function' ? data.get('image') : data.image;
+
+  const village = villages.find((v) => v.villageId === villageId);
   if (!village) {
     throw {
       response: {
@@ -630,13 +641,22 @@ export const mockCreateMemory = async (data) => {
     };
   }
 
+  // Simulate image upload: generate mock URL if image exists
+  let imageUrl = null;
+  if (imageFile) {
+    const randomId = Math.random().toString(36).substring(7);
+    const fileName = imageFile.name || 'uploaded_image.jpg';
+    imageUrl = `http://localhost:8080/uploads/memories/${randomId}_${fileName}`;
+  }
+
   const memories = getFromStorage("mock_memories", []);
   const newMemory = {
     memoryId: memories.length + 1,
     userId: currentUser.userId,
-    villageId: data.villageId,
-    content: data.content,
-    visitDate: data.visitDate || new Date().toISOString().split("T")[0],
+    villageId,
+    content,
+    visitDate: visitDate || new Date().toISOString().split("T")[0],
+    imageUrl,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
@@ -649,11 +669,16 @@ export const mockCreateMemory = async (data) => {
       memoryId: newMemory.memoryId,
       villageId: newMemory.villageId,
       villageName: village.villageName,
+      sidoName: village.sidoName,
+      sigunguName: village.sigunguName,
+      address: village.address,
       content: newMemory.content,
       visitDate: newMemory.visitDate,
+      imageUrl: newMemory.imageUrl,
       createdAt: newMemory.createdAt,
+      updatedAt: newMemory.updatedAt,
     },
-    "추억이 저장되었습니다."
+    "추억이 작성되었습니다."
   );
 };
 
@@ -684,19 +709,41 @@ export const mockUpdateMemory = async (memoryId, data) => {
     };
   }
 
-  memory.content = data.content;
-  if (data.visitDate) {
-    memory.visitDate = data.visitDate;
+  // Extract data from FormData (in mock, it comes as regular object)
+  const content = typeof data.get === 'function' ? data.get('content') : data.content;
+  const visitDate = typeof data.get === 'function' ? data.get('visitDate') : data.visitDate;
+  const imageFile = typeof data.get === 'function' ? data.get('image') : data.image;
+
+  memory.content = content;
+  if (visitDate) {
+    memory.visitDate = visitDate;
   }
+
+  // If new image is uploaded, replace old image URL
+  if (imageFile) {
+    const randomId = Math.random().toString(36).substring(7);
+    const fileName = imageFile.name || 'uploaded_image.jpg';
+    memory.imageUrl = `http://localhost:8080/uploads/memories/${randomId}_${fileName}`;
+  }
+
   memory.updatedAt = new Date().toISOString();
 
   saveToStorage("mock_memories", memories);
 
+  const village = villages.find((v) => v.villageId === memory.villageId);
+
   return successResponse(
     {
       memoryId: memory.memoryId,
+      villageId: memory.villageId,
+      villageName: village?.villageName,
+      sidoName: village?.sidoName,
+      sigunguName: village?.sigunguName,
+      address: village?.address,
       content: memory.content,
       visitDate: memory.visitDate,
+      imageUrl: memory.imageUrl || null,
+      createdAt: memory.createdAt,
       updatedAt: memory.updatedAt,
     },
     "추억이 수정되었습니다."
