@@ -24,19 +24,14 @@ function MyCollection({ content, data }) {
 }
 
 const Collection = styled.div`
-
     display:flex;
     align-items: flex-end;
-    color: #FFDFD6;
-text-shadow: 2.094px 2.094px 0 #1E3445;
--webkit-text-stroke-width: 3.14px;
--webkit-text-stroke-color: #1E3445;
-
-font-size: 18px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-letter-spacing: -0.63px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.63px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
     `
 
 
