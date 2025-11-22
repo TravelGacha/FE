@@ -259,7 +259,7 @@ export const mockGetVillages = async (params = {}) => {
   }
   if (params.programType) {
     filteredVillages = filteredVillages.filter((v) =>
-      v.programName.includes(params.programType)
+      v.programContent === params.programType
     );
   }
 
