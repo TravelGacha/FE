@@ -29,9 +29,10 @@ function VillageModal({ closeModal, clickWriteBtn, villageName, address, imageUr
     );
 }
 
-const Content = styled.span`
+const Content = styled.p`
   font-size: 12px;
   text-align: left;
+  width: 317.4;
 `;
 
 const XBtn = styled.img`
