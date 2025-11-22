@@ -46,8 +46,8 @@ export default function VillageModal({
           <Divider />
 
           <Section>
-            <SectionTitle>{programName}</SectionTitle>
-            <Content>{programContent}</Content>
+            <SectionTitle>{programContent}</SectionTitle>
+            <Content>{programName}</Content>
           </Section>
 
           {isButton && (

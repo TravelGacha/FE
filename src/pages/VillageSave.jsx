@@ -23,9 +23,11 @@ function VillageSave() {
 
                 const { content, totalPages, currentPage } = res.data.data;
 
+                const validatedCurrentPage = typeof currentPage === 'number' ? currentPage : 0;
+
                 if (res.data.success) {
                     setVillageList(content);
-                    setPageData({ totalPages, currentPage });
+                    setPageData({ totalPages, currentPage: validatedCurrentPage });
                 }
             } catch (error) {
                 console.error("collection 불러오기 실패:", error);
