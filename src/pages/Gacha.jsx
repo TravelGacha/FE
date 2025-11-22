@@ -39,7 +39,7 @@ export default function Gacha() {
   }, []);
 
   const handleDraw = async () => {
-    if (!gachaStatus?.canDraw) {
+    if (gachaStatus?.canDraw) {
       alert("오늘은 이미 뽑기를 완료했습니다.");
       return;
     }
