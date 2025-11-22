@@ -44,10 +44,10 @@ function MemoryCard({ memoryId, villageName, sidoName, content, visitDate, image
             <ImgDiv src={imageUrl} alt={villageName} />
             <CardInfo>
                 <p>{villageName}</p>
-                <div>
+                <CardDiv>
                     <img src={location} alt='위치표시' />
                     <p>{sidoName}</p>
-                </div>
+                </CardDiv>
                 <hr />
                 <Datediv>
                     <img src={calendar} alt='캘린더' />
@@ -57,7 +57,7 @@ function MemoryCard({ memoryId, villageName, sidoName, content, visitDate, image
                 <DeleteDiv>
                     <PixelButton
                         text="삭제하기"
-                        onClick={clickDelete}
+                        onClick={clickDelteM}
                         backgroundColor="#DD1A21"
                         textColor="white"
                         borderColor="#05131D"
@@ -155,11 +155,6 @@ border-radius: 0 0 10px 10px;
 background: #FFF;
 padding: 13px 0 0 9px;
 box-sizing: border-box;
-div{
-display:flex;
-margin-top: 17px;
-
-}
 
 >p:first-of-type{
 color: #000;
@@ -169,7 +164,7 @@ font-style: normal;
 font-weight: 400;
 line-height: normal;
 letter-spacing: -0.84px;
-width: 100px;
+width: 290px;
 height: 24px;
 flex-shrink: 0;
 margin:0;
@@ -203,7 +198,11 @@ margin: 16px 0 18px 5px;
 
 p{
 text-align:left !important;}
+`;
 
-`
+const CardDiv = styled.div`
+    display:flex;
+    margin-top: 17px;
+`;
 
 export default MemoryCard;
