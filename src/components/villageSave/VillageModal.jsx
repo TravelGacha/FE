@@ -4,7 +4,8 @@ import modalXBtn from '../../assets/ModalXBtn.svg'
 import contentWriteImg from '../../assets/ContentWrite.svg'
 
 
-function VillageModal({ closeModal, clickWriteBtn, villageName, address, imageUrl, programName, programContent }) {
+function VillageModal({ closeModal, clickWriteBtn, villageName, address, programName, programContent, imageUrl }) {
+
     return (
         <ModalBack>
             <Modal>
