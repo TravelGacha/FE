@@ -13,7 +13,7 @@ function MyCollection({ content, data }) {
                 null
             )}
             {content === 'collection' ? (
-                <div>내 컬렉션 : {data}/100</div>
+                <div>내 컬렉션 : {data}/1254</div>
             ) : content === 'memory' ? (
                 <div>나의 추억 : {data}</div>
             ) : (

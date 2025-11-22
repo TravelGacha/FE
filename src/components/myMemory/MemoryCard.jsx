@@ -3,6 +3,7 @@ import location from '../../assets/Location.svg';
 import calendar from '../../assets/calendar.svg';
 import client from '../../api/client';
 import { useState } from 'react';
+import PixelButton from '../PixelButton';
 
 
 
@@ -54,6 +55,15 @@ function MemoryCard({ memoryId, villageName, sidoName, content, visitDate, image
                 </Datediv>
                 <Content>{content}</Content>
                 <DeleteBtn onClick={clickDelteM}>삭제하기</DeleteBtn>
+                <PixelButton
+                    text={isLoginMode ? "로그인" : "회원가입"}
+                    onClick={handleSubmit}
+                    backgroundColor='#DD1A21'
+                    textColor='white'
+                    borderColor='#05131D'
+                    width='210px'
+                    fontSize='24px'
+                />
             </CardInfo>
         </Card>
     );
