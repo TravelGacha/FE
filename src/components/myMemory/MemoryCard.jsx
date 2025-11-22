@@ -54,16 +54,17 @@ function MemoryCard({ memoryId, villageName, sidoName, content, visitDate, image
                     <Date>{visitDate}</Date>
                 </Datediv>
                 <Content>{content}</Content>
-                <DeleteBtn onClick={clickDelteM}>삭제하기</DeleteBtn>
-                <PixelButton
-                    text={isLoginMode ? "로그인" : "회원가입"}
-                    onClick={handleSubmit}
-                    backgroundColor='#DD1A21'
-                    textColor='white'
-                    borderColor='#05131D'
-                    width='210px'
-                    fontSize='24px'
-                />
+                <DeleteDiv>
+                    <PixelButton
+                        text={"삭제하기"}
+                        onClick={clickDelete}
+                        backgroundColor='#DD1A21'
+                        textColor='white'
+                        borderColor='#05131D'
+                        width='210px'
+                        fontSize='24px'
+                    />
+                </DeleteDiv>
             </CardInfo>
         </Card>
     );
@@ -104,14 +105,12 @@ div>button:nth-of-type(2){
 background-color: red;
 }`
 
-const DeleteBtn = styled.button`
-background-color: red;
-color:white;
+const DeleteDiv = styled.div`
 position:absolute;
 bottom: 10px;
 right: 10px;
-border-radius: 10px;
-border:0;`
+border:0;
+`;
 
 const Card = styled.div`
 width: 305px;
