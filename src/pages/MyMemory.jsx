@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PixelButton from '../components/PixelButton';
 import MemoryCard from '../components/myMemory/MemoryCard';
 import mPlusBtn from '../assets/MPlusBtn.svg';
+import MyMemoryBack from '../assets/mymemory.svg';
 import client from '../api/client';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -47,6 +48,7 @@ function MyMemory() {
 
     return (
         <MMemoryBasic>
+            <MyMemoryBackImg src={MyMemoryBack} alt="MyMemoryBack" />
             <PixelButton
                 text="나의 추억들"
                 isButton={false}
@@ -82,10 +84,12 @@ const MMemoryBasic = styled.div`
     position: absolute;
     bottom: 34px;
     right:20px;
+    z-index: 1;
   }
 
   .swiper-container {
     width: 100%;
+    z-index: 1;
   }
 
   .swiper {
@@ -99,6 +103,12 @@ const MMemoryBasic = styled.div`
     display: flex;
     justify-content: center;
   }
+`;
+
+const MyMemoryBackImg = styled.img`
+  position: absolute;
+  top: 100px;
+  left: 0px;
 `;
 
 export default MyMemory;
