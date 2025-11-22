@@ -70,7 +70,11 @@ export default function VillageModal({
 }
 
 const ModalOverlay = styled.div`
-  position: fixed;
+  width: 100%;
+  height: 100%;
+  position:absolute;
+  top:0;
+  left:0;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
