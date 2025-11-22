@@ -10,6 +10,14 @@ import { useState } from 'react';
 function MemoryAdd({ closeMModal, villageId, villageName, address, imageUrl }) {
     const [content, setContent] = useState("");
     const [visitDate, setVisitDate] = useState("");
+    const [imgFile, setImgFile] = useState(null)
+
+    const imgFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImgFile(file);
+        }
+    }
 
     const clickSave = async () => {
         console.log(content);
@@ -18,15 +26,22 @@ function MemoryAdd({ closeMModal, villageId, villageName, address, imageUrl }) {
 
         }
 
-        if (!villageId) {
+        const formData = new FormData();
+        formData.append('villageId', villageId);
+        formData.append('content', content);
 
+        if (visitDate) {
+            formData.append('visitDate', visitDate);
+        }
+        if (imgFile) {
+            formData.append('image', imgFile);
         }
 
         try {
-            const res = await client.post('/memories', {
-                villageId: villageId,
-                content: content,
-                visitDate: visitDate
+            const res = await client.post('/memories', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             });
 
             if (res.data.success) {
@@ -44,7 +59,7 @@ function MemoryAdd({ closeMModal, villageId, villageName, address, imageUrl }) {
         <ModalBack>
             <Modal>
                 <XBtn src={modalXBtn} alt='나가기' onClick={closeMModal} />
-                <ImgDiv src={imageUrl} alt={villageName} />
+                {/* <ImgDiv src={imageUrl} alt={villageName} /> */}
                 <label htmlFor='imageUpload'>
                     <img src={imgAddBtn} alt='이미지추가' />
                 </label>
@@ -56,7 +71,7 @@ function MemoryAdd({ closeMModal, villageId, villageName, address, imageUrl }) {
                     </div>
                     <hr />
                     <form>
-                        <input id='imageUpload' type='file' accept='image/*' />
+                        <input id='imageUpload' type='file' accept='image/*' onChange={imgFileChange} />
                         <img src={calendar} alt='캘린더' />
                         <input type='date' value={visitDate} onChange={(e) => setVisitDate(e.target.value)} />
                         <textarea placeholder="내용을 입력해주세요." required value={content} onChange={(e) => setContent(e.target.value)}></textarea>
