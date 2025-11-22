@@ -159,7 +159,7 @@ const Container = styled.div`
   align-items: center;
   height: 100%;
   background-color: #A0E4FF;
-  padding: 60px 10px 45px;
+  padding: 60px 10px 0px;
   gap: 20px;
   position: relative;
   overflow: hidden;
@@ -296,6 +296,7 @@ const VillageList = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding-bottom: 45px;
   gap: 10px;
   flex: 1;
   overflow-y: auto;
