@@ -31,7 +31,6 @@ const Collection = styled.div`
     font-weight: 400;
     line-height: normal;
     letter-spacing: -0.63px;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
     `
 
 

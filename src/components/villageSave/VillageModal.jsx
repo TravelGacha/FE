@@ -4,7 +4,7 @@ import modalXBtn from '../../assets/ModalXBtn.svg'
 import contentWriteImg from '../../assets/ContentWrite.svg'
 
 
-function VillageModal({ closeModal, clickWriteBtn, villageName, address, imageUrl, programContent }) {
+function VillageModal({ closeModal, clickWriteBtn, villageName, address, imageUrl, programName, programContent }) {
     return (
         <ModalBack>
             <Modal>
@@ -21,12 +21,18 @@ function VillageModal({ closeModal, clickWriteBtn, villageName, address, imageUr
                     <hr />
                     <p>체험프로그램</p>
                     <Programs>{programContent}</Programs>
+                    <Content>{programName}</Content>
                     <ContentWriteImg src={contentWriteImg} alt='글 작성' onClick={clickWriteBtn}></ContentWriteImg>
                 </VillageInfo>
             </Modal>
         </ModalBack>
     );
 }
+
+const Content = styled.span`
+  font-size: 12px;
+  text-align: left;
+`;
 
 const XBtn = styled.img`
 position: absolute;
