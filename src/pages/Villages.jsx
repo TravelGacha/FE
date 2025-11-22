@@ -33,11 +33,8 @@ export default function Villages() {
           },
         });
         const { content, totalPages, currentPage } = response.data.data;
-
-        const validatedCurrentPage = typeof currentPage === 'number' ? currentPage : 0;
-
         setVillages(content);
-        setPageData({ totalPages, currentPage: validatedCurrentPage });
+        setPageData({ totalPages, currentPage });
       } catch (err) {
         setError(err.response?.data?.message || '마을 목록을 불러오는 데 실패했습니다.');
       } finally {
@@ -47,7 +44,6 @@ export default function Villages() {
 
     fetchVillages();
   }, [pageData.currentPage, filters]);
-
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -84,10 +80,7 @@ export default function Villages() {
     <Container>
       <BackgroundMap src={MapImage} alt="Map Background" />
 
-      <PixelButton
-        text="마을 리스트"
-        isButton={false}
-      />
+      <PixelButton text="마을 리스트" isButton={false} />
 
       <BannerCard onClick={() => navigate('/app/gacha')}>
         <BannerContent>
@@ -135,6 +128,7 @@ export default function Villages() {
             key={village.villageId}
             villageName={village.villageName}
             sidoName={village.sidoName}
+            imageUrl={village.imageUrl}
             onClick={() => openModal(village.villageId)}
           />
         ))}
@@ -148,6 +142,7 @@ export default function Villages() {
           address={selectedVillageDetails.address}
           programName={selectedVillageDetails.programName}
           programContent={selectedVillageDetails.programContent}
+          imageUrl={selectedVillageDetails.imageUrl}
         />
       )}
     </Container>
@@ -170,7 +165,7 @@ const BackgroundMap = styled.img`
   position: fixed;
   top: 170px;
   width: 360px;
-  object-fit:cover;
+  object-fit: cover;
   z-index: 0;
   pointer-events: none;
   opacity: 50%
@@ -251,6 +246,9 @@ const Select = styled.select`
 `;
 
 const PaginationContainer = styled.div`
+  width: 100%;
+  max-width: 375px;
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;

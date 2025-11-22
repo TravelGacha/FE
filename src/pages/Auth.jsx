@@ -143,7 +143,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-color: #A0E4FF;
+  background-color: #8391FF;
   padding: 20px;
   gap: 60px;
 `;

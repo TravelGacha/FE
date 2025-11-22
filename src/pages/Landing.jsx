@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import PixelButton from '../components/PixelButton';
-import landingGachaImage from '../assets/gacha-machine.svg';
+import landingGachaImage from '../assets/landing.svg';
 
 const fadeIn = keyframes`
   from {
@@ -42,23 +42,28 @@ export default function Landing() {
 
   return (
     <Container>
-      <PixelButton
-        text="여행 가챠!"
-        isButton={false}
-      />
 
       <GachaImage src={landingGachaImage} alt="Gacha Machine" />
 
-      <AnimatedPixelButton
-        text="로그인"
-        onClick={handleLoginClick}
-        backgroundColor='#DD1A21'
-        textColor='white'
-        borderColor='#05131D'
-        width='210px'
-        fontSize='24px'
-        isVisible={showButtons}
-      />
+      <Div>
+        <PixelButton
+          text="여행 가챠!"
+          isButton={false}
+        />
+      </Div>
+
+      <Div>
+        <AnimatedPixelButton
+          text="로그인"
+          onClick={handleLoginClick}
+          backgroundColor='#DD1A21'
+          textColor='white'
+          borderColor='#05131D'
+          width='210px'
+          fontSize='24px'
+          isVisible={showButtons}
+        />
+      </Div>
     </Container>
   );
 };
@@ -66,15 +71,20 @@ export default function Landing() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
-  background-color: #A0E4FF;
-  padding: 12px;
-  gap: 60px;
+  background-color: #8391FF;
+  padding: 80px 12px 120px;
+`;
+
+const Div = styled.div`
+  z-index: 1;
 `;
 
 const GachaImage = styled.img`
-  width: 370px;
-  max-width: 90%;
+  position: absolute;
+  top: 100px;
+  left: -53.5px;
+  width: 500px;
 `;

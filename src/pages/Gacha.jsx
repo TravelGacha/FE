@@ -134,6 +134,7 @@ export default function Gacha() {
           address={gachaResult.address}
           programName={gachaResult.programName}
           programContent={gachaResult.programContent}
+          imageUrl={gachaResult.imageUrl}
           isButton={gachaResult.isNew}
           buttonText="저장하기"
           buttonOnClick={handleAddToCollection}
