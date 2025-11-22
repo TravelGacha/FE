@@ -32,9 +32,13 @@ export default function Villages() {
             programType: filters.programType || undefined,
           },
         });
-        const { content, totalPages, currentPage } = response.data.data;
-        setVillages(content);
-        setPageData({ totalPages, currentPage });
+
+        if (response.data.success) {
+          const { content, totalPages, currentPage } = response.data.data;
+          const validatedCurrentPage = typeof currentPage === 'number' ? currentPage : 0;
+          setVillages(content);
+          setPageData({ totalPages, currentPage: validatedCurrentPage });
+        }
       } catch (err) {
         setError(err.response?.data?.message || '마을 목록을 불러오는 데 실패했습니다.');
       } finally {

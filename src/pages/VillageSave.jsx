@@ -21,11 +21,9 @@ function VillageSave() {
                     }
                 });
 
-                const { content, totalPages, currentPage } = res.data.data;
-
-                const validatedCurrentPage = typeof currentPage === 'number' ? currentPage : 0;
-
                 if (res.data.success) {
+                    const { content, totalPages, currentPage } = res.data.data;
+                    const validatedCurrentPage = typeof currentPage === 'number' ? currentPage : 0;
                     setVillageList(content);
                     setPageData({ totalPages, currentPage: validatedCurrentPage });
                 }
