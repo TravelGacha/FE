@@ -39,7 +39,7 @@ export default function Gacha() {
   }, []);
 
   const handleDraw = async () => {
-    if (gachaStatus?.canDraw) {
+    if (!gachaStatus?.canDraw) {
       alert("오늘은 이미 뽑기를 완료했습니다.");
       return;
     }
@@ -102,7 +102,7 @@ export default function Gacha() {
     <Container>
       <PixelButton
         text={gachaStatus?.canDraw ? "마을 가챠!" : (loading ? "두근두근..." : `내일은 어떤\n여행지가 나올까?`)}
-        fontSize={gachaStatus?.canDraw && !loading && "22px"}
+        fontSize={!gachaStatus?.canDraw && !loading && "22px"}
         isButton={false}
       />
 
