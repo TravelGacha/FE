@@ -73,7 +73,7 @@ function MemoryAdd({ closeMModal, villageId, villageName, address, imageUrl }) {
                     <form>
                         <input id='imageUpload' type='file' accept='image/*' onChange={imgFileChange} />
                         <img src={calendar} alt='캘린더' />
-                        <input type='date' value={visitDate} onChange={(e) => setVisitDate(e.target.value)} />
+                        <DateInput type='date' value={visitDate} onChange={(e) => setVisitDate(e.target.value)} />
                         <textarea placeholder="내용을 입력해주세요." required value={content} onChange={(e) => setContent(e.target.value)}></textarea>
                     </form>
                     <SaveBtn onClick={clickSave}><img src={saveImg} alt='저장하기' /></SaveBtn>
@@ -82,6 +82,9 @@ function MemoryAdd({ closeMModal, villageId, villageName, address, imageUrl }) {
         </ModalBack >
     );
 }
+
+const DateInput = styled.input`
+margin-bottom:3px;`
 
 const XBtn = styled.img`
 position: absolute;

@@ -6,6 +6,8 @@ import contentWriteImg from '../../assets/ContentWrite.svg'
 
 function VillageModal({ closeModal, clickWriteBtn, villageName, address, programName, programContent, imageUrl }) {
 
+    const programNameSlice = programName.slice(0, 90);
+
     return (
         <ModalBack>
             <Modal>
@@ -22,7 +24,7 @@ function VillageModal({ closeModal, clickWriteBtn, villageName, address, program
                     <hr />
                     <p>체험프로그램</p>
                     <Programs>{programContent}</Programs>
-                    <Content>{programName}</Content>
+                    <Content>{programNameSlice}</Content>
                     <ContentWriteImg src={contentWriteImg} alt='글 작성' onClick={clickWriteBtn}></ContentWriteImg>
                 </VillageInfo>
             </Modal>
@@ -33,7 +35,7 @@ function VillageModal({ closeModal, clickWriteBtn, villageName, address, program
 const Content = styled.p`
   font-size: 12px;
   text-align: left;
-  width: 317.4;
+  width: 317.4px;
 `;
 
 const XBtn = styled.img`
