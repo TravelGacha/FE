@@ -70,8 +70,8 @@ export default function VillageModal({
 }
 
 const ModalOverlay = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 393px;
+  height: 852px;
   position:absolute;
   top:0;
   left:0;
